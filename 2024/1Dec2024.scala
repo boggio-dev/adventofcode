@@ -10,24 +10,19 @@ object DistanceCalculator {
             (parts(0).toInt, parts(1).toInt)
         }.unzip
 
-        val distances = calculateDistances(left, right)
+        val sortedLeft = left.sorted
+        val sortedRight = right.sorted
 
-        println(distances)
+        // Part 1
+        val totalDistance = calculateDistances(sortedLeft, sortedRight)
+
+        println(totalDistance)
     }
 
-    def calculateDistances(left: Seq[Int], right: Seq[Int]): Seq[Int] = {
-        left.zip(right).map { 
-            case (left, right) =>
-                if (left == right) {
-                    0
-                } else {
-                    val sortedLeft = left.toString.map(_.asDigit).sorted
-                    val sortedRight = right.toString().map(_.asDigit).sorted
-
-                    sortedLeft.zip(sortedRight).foldLeft(0) { (acc, pair) =>
-                        acc + math.abs(pair._1 - pair._2)
-                    }
-                }
-        }
+    def calculateDistances(sortedLeft: Seq[Int], sortedRight: Seq[Int]): Int = {
+        sortedLeft
+        .zip(sortedRight)
+        .map { case (l, r) => math.abs(l - r) }
+        .sum
     }
 }
